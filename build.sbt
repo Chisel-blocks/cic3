@@ -71,4 +71,5 @@ scalacOptions ++= scalacOptionsVersion(scalaVersion.value)
 javacOptions ++= javacOptionsVersion(scalaVersion.value)
 
 libraryDependencies += "edu.berkeley.cs" %% "dsptools" % "1.1-SNAPSHOT"
+libraryDependencies += "edu.berkeley.eecs" %% "ofdm" % "0.1"
 
