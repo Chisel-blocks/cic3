@@ -4,7 +4,7 @@
 # The purpose is to control the compilation and testing
 # in parametrized manner from this single file
 # Created by Marko Kosunen on 24.03.2015
-# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 03.03.2018 18:44
+# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 04.03.2018 09:46
 #############################################################################
 ##Function to display help with -h argument and to control 
 ##The configuration from the commnad line
