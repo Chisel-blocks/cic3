@@ -24,7 +24,7 @@ def javacOptionsVersion(scalaVersion: String): Seq[String] = {
   }
 }
 
-name := "chisel-study-of-pikkis"
+name := "TheSDK-Generators"
 
 version := "3.0.0"
 
