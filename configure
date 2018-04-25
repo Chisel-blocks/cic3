@@ -4,7 +4,7 @@
 # The purpose is to control the compilation and testing
 # in parametrized manner from this single file
 # Created by Marko Kosunen on 24.03.2015
-# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 24.04.2018 14:54
+# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 25.04.2018 15:09
 #############################################################################
 ##Function to display help with -h argument and to control 
 ##The configuration from the commnad line
@@ -41,7 +41,9 @@ VERILOGPATH=${ROOTPATH}/verilog
 SCALAPATH=${ROOTPATH}/src/main/scala
 VPATHDIRS=`find ${SCALAPATH}/* -type d -exec basename '{}' ';'`
 MODULES="buffer f2_dsp_tapein0 f2_digital_postproc_tapein0 \
-fir halfband cic3 f2_decimator clkdiv_n_2_4_8 fifo f2_rx_path_tapein4 f2_dsp_tapein4 f2_rx_path_tapein5 f2_dsp_tapein5 f2_rx_path_tapein6 f2_dsp_tapein6 f2_cm_serdes_lane"
+fir halfband cic3 f2_decimator clkdiv_n_2_4_8 fifo f2_rx_path_tapein4 \
+f2_dsp_tapein4 f2_rx_path_tapein5 f2_dsp_tapein5 f2_rx_path_tapein6 \
+f2_dsp_tapein6 f2_cm_serdes_lane f2_lane_switch"
 
 
 
@@ -90,7 +92,7 @@ done`
 	@#Test if testbech generator exists and compile it
 	@if [ -f \$(testbenchfile) ]; then \\
 		\$(SBT) 'run-main \$(package).tb_\$(class) -td \$(VERILOGPATH)'; \\
-    fi
+	fi
 clean:
 	rm -f \$(VERILOGPATH)/*.v
 	rm -f \$(VERILOGPATH)/*.anno
@@ -110,8 +112,8 @@ done`
 help:
 	@echo "configured modules are:";
 	@for i in \$(MODULES) ; do \\
-       echo \$\$i; \\
-    done
+	   echo \$\$i; \\
+	done
 ##Semicolon is a must?
 #\$(DEPDIR)/%.d: ;
 #.PRECIOUS: \$(DEPDIR)/%.d
