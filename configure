@@ -4,7 +4,7 @@
 # The purpose is to control the compilation and testing
 # in parametrized manner from this single file
 # Created by Marko Kosunen on 24.03.2015
-# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 30.04.2018 16:33
+# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 03.05.2018 15:49
 #############################################################################
 ##Function to display help with -h argument and to control 
 ##The configuration from the commnad line
@@ -41,7 +41,7 @@ VERILOGPATH=${ROOTPATH}/verilog
 SCALAPATH=${ROOTPATH}/src/main/scala
 VPATHDIRS=`find ${SCALAPATH}/* -type d -exec basename '{}' ';'`
 MODULES="f2_digital_postproc_tapein0 \
-fir halfband cic3 f2_decimator clkdiv_n_2_4_8 fifo f2_rx_path \
+fir halfband cic3 cic3_interpolator f2_decimator clkdiv_n_2_4_8 fifo f2_rx_path \
 f2_rx_dsp f2_cm_serdes_lane f2_lane_switch f2_serdes_test f2_dsp edge_detector"
 
 ############################# MAKEFILE   ####################################
