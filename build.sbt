@@ -72,8 +72,9 @@ javacOptions ++= javacOptionsVersion(scalaVersion.value)
 
 libraryDependencies += "edu.berkeley.cs" %% "dsptools" % "1.1-SNAPSHOT"
 libraryDependencies += "edu.berkeley.eecs" %% "ofdm" % "0.1"
-libraryDependencies += "edu.berkeley.cs" %% "hbwif" % "2.0"
-libraryDependencies += "edu.berkeley.cs" %% "eagle_serdes" % "0.0"
+libraryDependencies += "edu.berkeley.cs" %% "hbwif" % "2.0-SNAPSHOT"
+libraryDependencies += "edu.berkeley.cs" %% "eagle_serdes" % "0.0-SNAPSHOT"
+
 
 
 
