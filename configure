@@ -4,7 +4,7 @@
 # The purpose is to control the compilation and testing
 # in parametrized manner from this single file
 # Created by Marko Kosunen on 24.03.2015
-# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 05.05.2018 18:52
+# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 06.05.2018 15:16
 #############################################################################
 ##Function to display help with -h argument and to control 
 ##The configuration from the commnad line
@@ -33,17 +33,17 @@ do
 done
 
 
-
-#Sets up THESDKHOME from gloabl setup file
+#$FIRRTL #Sets up THESDKHOME from gloabl setup file
 #. ../../TheSDK.config
 ROOTPATH=`pwd`
 VERILOGPATH=${ROOTPATH}/verilog
 SCALAPATH=${ROOTPATH}/src/main/scala
+FIRRTL_JAR="$ROOTPATH/rocket-chip/firrtl/utils/bin/firrtl.jar"
+
 VPATHDIRS=`find ${SCALAPATH}/* -type d -exec basename '{}' ';'`
-MODULES="f2_digital_postproc_tapein0 \
-fir halfband halfband_interpolator cic3 cic3_interpolator f2_decimator f2_interpolator \
-clkdiv_n_2_4_8 fifo f2_rx_path f2_tx_path \
-f2_rx_dsp f2_tx_dsp f2_cm_serdes_lane f2_lane_switch f2_serdes_test f2_dsp edge_detector"
+MODULES="memblock f2_digital_postproc_tapein0 \
+fir halfband cic3 f2_decimator clkdiv_n_2_4_8 fifo f2_rx_path \
+f2_rx_dsp f2_cm_serdes_lane f2_lane_switch f2_serdes_test f2_dsp edge_detector"
 
 ############################# MAKEFILE   ####################################
 CURRENTFILE="${ROOTPATH}/Makefile"
@@ -63,6 +63,8 @@ MODULES= ${MODULES}
 TARGETS = \$(foreach name,\$(MODULES), \$(VERILOGPATH)/\$(name).v)
 #Commands
 SBT=sbt -J-Xmx16G -J-Xss8M
+FIRRTL=java -Xmx16G -Xss8M -cp $FIRRTL_JAR firrtl.Driver
+
 TOUCH=touch -r
 `for i in ${VPATHDIRS}; do
     echo vpath %.scala \\$\(SCALAPATH\)/$i
@@ -98,8 +100,19 @@ clean:
 	rm -rf \$(VERILOGPATH)
 	#rm -rf \$(DEPDIR)
 
-#Generate cleanup recipes for individual modules
-`for i in ${MODULES}; do
+MMOD ?=
+#memmap:
+#	\$(FIRRTL) -td ./verilog -tn \$(MMOD) -i  \$(VERILOGPATH)/\$(MMOD).fir \\
+#    -o \$(VERILOGPATH)/\$(MMOD)_mem.v -X verilog  \\
+#    --infer-rw \$(MMOD) --repl-seq-mem -c:\$(MMOD):-o:\$(VERILOGPATH)/\$(MMOD)_mem.conf \\
+#    -faf ./verilog/\$(MMOD).anno.json
+memmap:
+	\$(FIRRTL) -td ./verilog -tn \$(MMOD) -i  \$(VERILOGPATH)/\$(MMOD).fir \\
+    -o \$(VERILOGPATH)/\$(MMOD)_mem.v -X verilog  \\
+    --infer-rw \$(MMOD) --repl-seq-mem -c:\$(MMOD):-o:\$(VERILOGPATH)/\$(MMOD)_mem.conf
+
+#Gen        erate cleanup recipes for individual modules
+`for     i in ${MODULES}; do
 	echo .PHONY: clean_$i
 	echo clean_$i: 
 	echo -e "\trm -f \\$(VERILOGPATH)/$i.v"
