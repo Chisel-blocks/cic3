@@ -10,6 +10,7 @@ git submodule update --init hardfloat
 ##sbt publishig
 cd $DIR/rocket-chip/firrtl
 sbt publishLocal
+sbt assembly
 
 cd $DIR/rocket-chip/chisel3
 sbt publishLocal
