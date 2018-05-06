@@ -4,7 +4,7 @@
 # The purpose is to control the compilation and testing
 # in parametrized manner from this single file
 # Created by Marko Kosunen on 24.03.2015
-# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 05.05.2018 13:20
+# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 05.05.2018 18:52
 #############################################################################
 ##Function to display help with -h argument and to control 
 ##The configuration from the commnad line
@@ -43,7 +43,7 @@ VPATHDIRS=`find ${SCALAPATH}/* -type d -exec basename '{}' ';'`
 MODULES="f2_digital_postproc_tapein0 \
 fir halfband halfband_interpolator cic3 cic3_interpolator f2_decimator f2_interpolator \
 clkdiv_n_2_4_8 fifo f2_rx_path f2_tx_path \
-f2_rx_dsp f2_cm_serdes_lane f2_lane_switch f2_serdes_test f2_dsp edge_detector"
+f2_rx_dsp f2_tx_dsp f2_cm_serdes_lane f2_lane_switch f2_serdes_test f2_dsp edge_detector"
 
 ############################# MAKEFILE   ####################################
 CURRENTFILE="${ROOTPATH}/Makefile"
