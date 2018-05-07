@@ -4,7 +4,7 @@
 # The purpose is to control the compilation and testing
 # in parametrized manner from this single file
 # Created by Marko Kosunen on 24.03.2015
-# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 06.05.2018 17:33
+# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 07.05.2018 10:15
 #############################################################################
 ##Function to display help with -h argument and to control 
 ##The configuration from the commnad line
@@ -102,9 +102,11 @@ clean:
 
 MMOD ?=
 memmap:
+    mv  \$(VERILOGPATH)/\$(MMOD).v  \$(VERILOGPATH)/\$(MMOD)_unmapped.orig.v
 	\$(FIRRTL) -td ./verilog -tn \$(MMOD) -i  \$(VERILOGPATH)/\$(MMOD).fir \\
-    -o \$(VERILOGPATH)/\$(MMOD)_memmapped.v -X verilog  \\
-    --infer-rw \$(MMOD) --repl-seq-mem -c:\$(MMOD):-o:\$(VERILOGPATH)/\$(MMOD)_memmapped.conf
+    -o \$(VERILOGPATH)/\$(MMOD).v -X verilog  \\
+    --infer-rw \$(MMOD) --repl-seq-mem -c:\$(MMOD):-o:\$(VERILOGPATH)/\$(MMOD).conf
+ 
 
 #Generate cleanup recipes for individual modules
 `for i in ${MODULES}; do
