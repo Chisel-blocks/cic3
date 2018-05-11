@@ -4,7 +4,7 @@
 # The purpose is to control the compilation and testing
 # in parametrized manner from this single file
 # Created by Marko Kosunen on 24.03.2015
-# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 07.05.2018 16:45
+# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 11.05.2018 11:22
 #############################################################################
 ##Function to display help with -h argument and to control 
 ##The configuration from the commnad line
@@ -42,7 +42,7 @@ FIRRTL_JAR="$ROOTPATH/rocket-chip/firrtl/utils/bin/firrtl.jar"
 
 VPATHDIRS=`find ${SCALAPATH}/* -type d -exec basename '{}' ';'`
 MODULES="memblock f2_digital_postproc_tapein0 \
-fir halfband cic3 f2_decimator clkdiv_n_2_4_8 fifo f2_rx_path fifo f2_tx_path \
+fir halfband cic3 f2_decimator clkdiv_n_2_4_8 fifo f2_rx_path f2_tx_path \
 f2_rx_dsp f2_tx_dsp f2_cm_serdes_lane f2_lane_switch f2_serdes_test f2_dsp edge_detector"
 
 ############################# MAKEFILE   ####################################
