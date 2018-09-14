@@ -14,9 +14,11 @@ Use that to remove/add dependencies to your project. The projects you define sho
 Maven repository or published locally.
 
 To build everything (assuming you have access to all the preferences and have sbt installed properly):
-```./init_submodules.sh
+```
+./init_submodules.sh
 ./configure
-make all```
+make all
+```
 
 
 ### Below are the original instructions of the project template. I'm not currently using that approach. 
