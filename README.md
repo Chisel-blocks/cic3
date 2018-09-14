@@ -1,20 +1,22 @@
 Some notes:
 ===========
 
-1) init_submodules does does the required git tricks to get the scala code from remote repositiries. They are published locally to get them visible for other porjects. I think this is the preferable way of doing it, if youre not using Maven repositories.
+1) init_submodules does does the required git tricks to get the scala code from remote repositiries. 
+They are published locally to get them visible for other porjects. I think this is the preferable way of doing it, if youre not using Maven repositories.
 
 2) configure creates the Makefile
 
-3) make does the comilation. Generates also testbenches, if the testbench class is defined. Verilogs are generated to verilog directory.
+3) make does the comilation. Generates also testbenches, if the testbench class is defined. 
+Verilogs are generated to verilog directory.
 
 4) build.sbt defines the dependencies to other Scala projects.
-Use that to remove/add dependencies to your project. The projects you define should be either in Maven repository or published locally.
-
+Use that to remove/add dependencies to your project. The projects you define should be either in 
+Maven repository or published locally.
 
 To build everything (assuming you have access to all the preferences and have sbt installed properly):
-./init_submodules.sh
+''''./init_submodules.sh
 ./configure
-make all
+make all'''
 
 
 ### Below are the original instructions of the project template. I'm not currently using that approach. 
