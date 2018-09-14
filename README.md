@@ -1,3 +1,20 @@
+
+Some notes:
+===========
+
+1) init_submodules does does the required git tricks to get the scala gode from remote repositiries. They are published locally to get them visible for other porjects. I think this is the preferable way of doing it, if youre not using Maven repositories.
+
+2) configure creates the Makefile
+
+3) make does the comilation. Generates also testbenches, if the testbench class is defined. Verilogs are generated to verilog directory.
+
+4) build.sbt defines the dependencies to other Scala projects.
+Use that to remove/add dependencies to your project. The projects you define should be either in Maven repository or published locally.
+
+
+### Below are the original instructions of the template project. I'm not currently using that approach. 
+### Makefile is used for the compilation
+
 Chisel Project Template
 =======================
 
