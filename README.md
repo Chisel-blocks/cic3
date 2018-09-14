@@ -1,7 +1,7 @@
 Some notes:
 ===========
 
-1) init_submodules does does the required git tricks to get the scala gode from remote repositiries. They are published locally to get them visible for other porjects. I think this is the preferable way of doing it, if youre not using Maven repositories.
+1) init_submodules does does the required git tricks to get the scala code from remote repositiries. They are published locally to get them visible for other porjects. I think this is the preferable way of doing it, if youre not using Maven repositories.
 
 2) configure creates the Makefile
 
