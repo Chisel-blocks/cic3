@@ -1,4 +1,3 @@
-
 Some notes:
 ===========
 
@@ -12,8 +11,8 @@ Some notes:
 Use that to remove/add dependencies to your project. The projects you define should be either in Maven repository or published locally.
 
 
-### Below are the original instructions of the template project. I'm not currently using that approach. 
-### Makefile is used for the compilation
+### Below are the original instructions of the project template. I'm not currently using that approach. 
+=======================================================================================================
 
 Chisel Project Template
 =======================
