@@ -24,7 +24,7 @@ def javacOptionsVersion(scalaVersion: String): Seq[String] = {
   }
 }
 
-name := "chisel-study-of-pikkis"
+name := "TheSDK-Generators"
 
 version := "3.0.0"
 
@@ -39,7 +39,7 @@ resolvers ++= Seq(
 
 // Provide a managed dependency on X if -DXVersion="" is supplied on the command line.
 val defaultVersions = Map(
-  "chisel3" -> "3.0.+",
+  "chisel3" -> "3.2-SNAPSHOT",
   "chisel-iotesters" -> "1.1.+"
   )
 
@@ -72,4 +72,10 @@ javacOptions ++= javacOptionsVersion(scalaVersion.value)
 
 libraryDependencies += "edu.berkeley.cs" %% "dsptools" % "1.1-SNAPSHOT"
 libraryDependencies += "edu.berkeley.eecs" %% "ofdm" % "0.1"
+libraryDependencies += "edu.berkeley.cs" %% "hbwif" % "2.0-SNAPSHOT"
+libraryDependencies += "edu.berkeley.cs" %% "eagle_serdes" % "0.0-SNAPSHOT"
+
+
+
+
 

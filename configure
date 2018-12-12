@@ -4,7 +4,7 @@
 # The purpose is to control the compilation and testing
 # in parametrized manner from this single file
 # Created by Marko Kosunen on 24.03.2015
-# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 07.03.2018 14:31
+# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 09.08.2018 16:32
 #############################################################################
 ##Function to display help with -h argument and to control 
 ##The configuration from the commnad line
@@ -33,17 +33,17 @@ do
 done
 
 
-
-#Sets up THESDKHOME from gloabl setup file
+#$FIRRTL #Sets up THESDKHOME from gloabl setup file
 #. ../../TheSDK.config
 ROOTPATH=`pwd`
 VERILOGPATH=${ROOTPATH}/verilog
 SCALAPATH=${ROOTPATH}/src/main/scala
+FIRRTL_JAR="$ROOTPATH/rocket-chip/firrtl/utils/bin/firrtl.jar"
+
 VPATHDIRS=`find ${SCALAPATH}/* -type d -exec basename '{}' ';'`
-MODULES="buffer f2_dsp_tapein0 f2_digital_postproc_tapein0 \
-fir halfband cic3 f2_decimator clkdiv_n_2_4_8"
-
-
+MODULES="memblock f2_digital_postproc_tapein0 prog_delay \
+fir halfband cic3 f2_decimator clkdiv_n_2_4_8 edge_detector fifo f2_rx_path f2_tx_path \
+f2_rx_dsp f2_tx_dsp f2_cm_serdes_lane f2_lane_switch f2_serdes_test f2_dsp f2_dsp_and_serdes "
 
 ############################# MAKEFILE   ####################################
 CURRENTFILE="${ROOTPATH}/Makefile"
@@ -62,7 +62,9 @@ MODULES= ${MODULES}
 
 TARGETS = \$(foreach name,\$(MODULES), \$(VERILOGPATH)/\$(name).v)
 #Commands
-SBT= sbt
+SBT=sbt -J-Xmx16G -J-Xss8M
+FIRRTL=java -Xmx16G -Xss8M -cp $FIRRTL_JAR firrtl.Driver
+
 TOUCH=touch -r
 `for i in ${VPATHDIRS}; do
     echo vpath %.scala \\$\(SCALAPATH\)/$i
@@ -90,13 +92,20 @@ done`
 	@#Test if testbech generator exists and compile it
 	@if [ -f \$(testbenchfile) ]; then \\
 		\$(SBT) 'run-main \$(package).tb_\$(class) -td \$(VERILOGPATH)'; \\
-    fi
+	fi
 clean:
 	rm -f \$(VERILOGPATH)/*.v
 	rm -f \$(VERILOGPATH)/*.anno
 	rm -f \$(VERILOGPATH)/*.fir
 	rm -rf \$(VERILOGPATH)
 	#rm -rf \$(DEPDIR)
+
+MMOD ?=
+memmap:
+	cp \$(VERILOGPATH)/\$(MMOD).v  \$(VERILOGPATH)/\$(MMOD)_unmapped.orig.v
+	\$(FIRRTL) -td ./verilog -tn \$(MMOD) -i  \$(VERILOGPATH)/\$(MMOD).fir \\
+    -o \$(VERILOGPATH)/\$(MMOD).v -X verilog  \\
+    --infer-rw \$(MMOD) --repl-seq-mem -c:\$(MMOD):-o:\$(VERILOGPATH)/\$(MMOD).conf
 
 #Generate cleanup recipes for individual modules
 `for i in ${MODULES}; do
@@ -105,13 +114,15 @@ clean:
 	echo -e "\trm -f \\$(VERILOGPATH)/$i.v"
 	echo -e "\trm -f \\$(VERILOGPATH)/$i.anno"
 	echo -e "\trm -f \\$(VERILOGPATH)/$i.fir"
+    echo -e "\trm -f \\$(VERILOGPATH)/${i}_memmapped.conf"
+    echo -e "\trm -f \\$(VERILOGPATH)/${i}_memmapped.v"
 done`
 
 help:
 	@echo "configured modules are:";
 	@for i in \$(MODULES) ; do \\
-       echo \$\$i; \\
-    done
+	   echo \$\$i; \\
+	done
 ##Semicolon is a must?
 #\$(DEPDIR)/%.d: ;
 #.PRECIOUS: \$(DEPDIR)/%.d
