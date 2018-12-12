@@ -1,40 +1,26 @@
 #!/bin/sh
+#Init submodules in this dir, if any
 DIR="$( cd "$( dirname $0 )" && pwd )"
 git submodule update --init
 
-cd $DIR/rocket-chip
-git submodule update --init chisel3
-git submodule update --init firrtl
-git submodule update --init hardfloat
+#Publish local the ones you need
+#cd $DIR/clkdiv_n_2_4_8
+#sbt publishLocal
 
-##sbt publishig
-cd $DIR/rocket-chip/firrtl
-sbt publishLocal
-sbt assembly
+#Selectively, init submodules of a larger projects
+#cd $DIR/rocket-chip
+#git submodule update --init chisel3
+#git submodule update --init firrtl
+#git submodule update --init hardfloat
 
-cd $DIR/rocket-chip/chisel3
-sbt publishLocal
-
-cd $DIR/rocket-chip/
-sbt publishLocal
-
-cd $DIR/hbwif
-sbt publishLocal
-
-cd $DIR/eagle_serdes
-git submodule update --init --recursive serdes_top
-sbt publishLocal
-
-cd $DIR/dsptools
-git submodule update --init --recursive
-sbt publishLocal
-
-cd $DIR/ofdm
-git submodule update --init --recursive
-sbt publishLocal
-
-cd $DIR/clkdiv_n_2_4_8
-sbt publishLocal
+#Recursively update submodeles
+#cd $DIR/eagle_serdes
+#git submodule update --init --recursive serdes_top
+#sbt publishLocal
+#Assemble executables
+###sbt publishing
+#cd $DIR/rocket-chip/firrtl
+#sbt publishLocal
+#sbt assembly
 
 exit 0
-

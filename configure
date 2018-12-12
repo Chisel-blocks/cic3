@@ -4,7 +4,7 @@
 # The purpose is to control the compilation and testing
 # in parametrized manner from this single file
 # Created by Marko Kosunen on 24.03.2015
-# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 09.08.2018 16:32
+# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 11.12.2018 20:27
 #############################################################################
 ##Function to display help with -h argument and to control 
 ##The configuration from the commnad line
@@ -24,7 +24,7 @@ help_f()
     echo -e "      Show this help."
 }
 
-while getopts CMPSh opt
+while getopts h opt
 do
   case "$opt" in
     h) help_f; exit 0;;
@@ -41,9 +41,7 @@ SCALAPATH=${ROOTPATH}/src/main/scala
 FIRRTL_JAR="$ROOTPATH/rocket-chip/firrtl/utils/bin/firrtl.jar"
 
 VPATHDIRS=`find ${SCALAPATH}/* -type d -exec basename '{}' ';'`
-MODULES="memblock f2_digital_postproc_tapein0 prog_delay \
-fir halfband cic3 f2_decimator clkdiv_n_2_4_8 edge_detector fifo f2_rx_path f2_tx_path \
-f2_rx_dsp f2_tx_dsp f2_cm_serdes_lane f2_lane_switch f2_serdes_test f2_dsp f2_dsp_and_serdes "
+MODULES="cic3"
 
 ############################# MAKEFILE   ####################################
 CURRENTFILE="${ROOTPATH}/Makefile"
@@ -80,8 +78,6 @@ all: \$(TARGETS)
 done`
 
 #Template for conditional makes
-#ifeq (\$(CONTROLLER), MATLAB)
-#endif
 #Figure out the naming conventions later. Package is lowercase, class equals main method
 #Does not track dependencies from scala source
 \$(VERILOGPATH)/%.v : %.scala  
@@ -100,12 +96,12 @@ clean:
 	rm -rf \$(VERILOGPATH)
 	#rm -rf \$(DEPDIR)
 
-MMOD ?=
-memmap:
-	cp \$(VERILOGPATH)/\$(MMOD).v  \$(VERILOGPATH)/\$(MMOD)_unmapped.orig.v
-	\$(FIRRTL) -td ./verilog -tn \$(MMOD) -i  \$(VERILOGPATH)/\$(MMOD).fir \\
-    -o \$(VERILOGPATH)/\$(MMOD).v -X verilog  \\
-    --infer-rw \$(MMOD) --repl-seq-mem -c:\$(MMOD):-o:\$(VERILOGPATH)/\$(MMOD).conf
+#MMOD ?=
+#memmap:
+#	cp \$(VERILOGPATH)/\$(MMOD).v  \$(VERILOGPATH)/\$(MMOD)_unmapped.orig.v
+#	\$(FIRRTL) -td ./verilog -tn \$(MMOD) -i  \$(VERILOGPATH)/\$(MMOD).fir \\
+#    -o \$(VERILOGPATH)/\$(MMOD).v -X verilog  \\
+#    --infer-rw \$(MMOD) --repl-seq-mem -c:\$(MMOD):-o:\$(VERILOGPATH)/\$(MMOD).conf
 
 #Generate cleanup recipes for individual modules
 `for i in ${MODULES}; do
@@ -123,17 +119,6 @@ help:
 	@for i in \$(MODULES) ; do \\
 	   echo \$\$i; \\
 	done
-##Semicolon is a must?
-#\$(DEPDIR)/%.d: ;
-#.PRECIOUS: \$(DEPDIR)/%.d
-
-#Includes the dependency files for the cmdfiles generated
-#by \$(MAKEDEPEND). Make is re-run, if these are created.
-#during the make
-#If the include is incorrect, empty recipe does not cause recompilation
-#In that case, Depfiles are considered intermediate.
-#include \$(MCMDFILE:\$(MATLABPATH)/%.m=\$(DEPDIR)/%.d)
-#endif
 EOF
 ##################Hereafter some files you should not need to modify ################################
 
