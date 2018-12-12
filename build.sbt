@@ -27,8 +27,8 @@ def javacOptionsVersion(scalaVersion: String): Seq[String] = {
     }
   }
 }
-def gitSubmoduleHashSnapshotVersion(submodule: String): String = {
-    scala.sys.process.Process(Seq("/bin/sh", "-c", "git submodule status | grep hbwif | awk '{print substr($1,0,7)}'")).!!.mkString.replaceAll("\\s", "")+"-SNAPSHOT"
+def gitSubmoduleHashSnapshotVersion(submod: String): String = {
+    scala.sys.process.Process(Seq("/bin/sh", "-c", "git submodule status | grep %s | awk '{print substr($1,0,7)}'".format(submod))).!!.mkString.replaceAll("\\s", "")+"-SNAPSHOT"
 }
 
 name := "TheSDK-Generators"

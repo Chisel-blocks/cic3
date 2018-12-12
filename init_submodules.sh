@@ -33,5 +33,8 @@ cd $DIR/ofdm
 git submodule update --init --recursive
 sbt publishLocal
 
+cd $DIR/clkdiv_n_2_4_8
+sbt publishLocal
+
 exit 0
 
