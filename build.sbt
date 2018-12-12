@@ -80,9 +80,9 @@ javacOptions ++= javacOptionsVersion(scalaVersion.value)
 
 libraryDependencies += "edu.berkeley.cs" %% "dsptools" % "1.1-SNAPSHOT"
 libraryDependencies += "edu.berkeley.eecs" %% "ofdm" % "0.1"
-
-//libraryDependencies += "edu.berkeley.cs" %% "hbwif" % ("git submodule status | grep hbwif | awk '{print substr($1,0,7)}'"!!).mkString.replaceAll("\\s", "")+"-SNAPSHOT"
 libraryDependencies += "edu.berkeley.cs" %% "hbwif" % gitSubmoduleHashSnapshotVersion("hbwif")
+
+libraryDependencies += "edu.berkeley.cs" %% "clkdiv_n_2_4_8" % gitSubmoduleHashSnapshotVersion("clkdiv_n_2_4_8")
 
 libraryDependencies += "edu.berkeley.cs" %% "eagle_serdes" % "0.0-SNAPSHOT"
 
