@@ -1,3 +1,7 @@
+import scala.sys.process._
+// OBS: sbt._ has also process. Importing scala.sys.process 
+// and explicitly using it ensures the correct operation
+
 def scalacOptionsVersion(scalaVersion: String): Seq[String] = {
   Seq() ++ {
     // If we're building with Scala > 2.11, enable the compile option
@@ -23,10 +27,14 @@ def javacOptionsVersion(scalaVersion: String): Seq[String] = {
     }
   }
 }
+def gitSubmoduleHashSnapshotVersion(submodule: String): String = {
+    scala.sys.process.Process(Seq("/bin/sh", "-c", "git submodule status | grep hbwif | awk '{print substr($1,0,7)}'")).!!.mkString.replaceAll("\\s", "")+"-SNAPSHOT"
+}
 
 name := "TheSDK-Generators"
 
-version := "3.0.0"
+//version := "3.0.0" 
+version := scala.sys.process.Process("git rev-parse --short HEAD").!!.mkString.replaceAll("\\s", "")+"-SNAPSHOT"
 
 scalaVersion := "2.11.11"
 
@@ -72,7 +80,10 @@ javacOptions ++= javacOptionsVersion(scalaVersion.value)
 
 libraryDependencies += "edu.berkeley.cs" %% "dsptools" % "1.1-SNAPSHOT"
 libraryDependencies += "edu.berkeley.eecs" %% "ofdm" % "0.1"
-libraryDependencies += "edu.berkeley.cs" %% "hbwif" % "2.0-SNAPSHOT"
+
+//libraryDependencies += "edu.berkeley.cs" %% "hbwif" % ("git submodule status | grep hbwif | awk '{print substr($1,0,7)}'"!!).mkString.replaceAll("\\s", "")+"-SNAPSHOT"
+libraryDependencies += "edu.berkeley.cs" %% "hbwif" % gitSubmoduleHashSnapshotVersion("hbwif")
+
 libraryDependencies += "edu.berkeley.cs" %% "eagle_serdes" % "0.0-SNAPSHOT"
 
 
