@@ -40,7 +40,7 @@ def javacOptionsVersion(scalaVersion: String): Seq[String] = {
 // Parse the version of a submodle from the git submodule status
 // for those modules not version controlled by Maven or equivalent
 def gitSubmoduleHashSnapshotVersion(submod: String): String = {
-    val shellcommand =  "git submodule status | grep %s | awk '{print substr($1,0,7)}'".format(submod)
+    val shellcommand =  "git submodule status | grep -w %s | awk '{print substr($1,0,7)}'".format(submod)
     scala.sys.process.Process(Seq("/bin/sh", "-c", shellcommand )).!!.mkString.replaceAll("\\s", "")+"-SNAPSHOT"
 }
 
