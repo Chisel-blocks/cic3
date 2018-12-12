@@ -20,7 +20,7 @@ It is created with line:
 Dependencies to similar submodules are defined with the 
 function gitSubmoduleHashSnapshotVersion
 and with the dependency definitions
-`libraryDependencies += "edu.berkeley.cs" %% "hbwif" % gitSubmoduleHashSnapshotVersion(modulename")`
+`libraryDependencies += "edu.berkeley.cs" %% "modulename" % gitSubmoduleHashSnapshotVersion("modulename")`
 
 This dependency is satisfied only if there is a locallly published (sbt publishLocal) submodule 
 with the submodule hash of the current git submodule.
