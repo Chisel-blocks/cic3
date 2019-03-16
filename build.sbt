@@ -61,7 +61,7 @@ resolvers += "Sonatype Releases" at "https://oss.sonatype.org/content/repositori
 // Provide a managed dependency on X if -DXVersion="" is supplied on the command line.
 // [TODO] is simpler clearer?
 val defaultVersions = Map(
-  "chisel3" -> "3.2-SNAPSHOT",
+  "chisel3" -> "3.1.6",
   "chisel-iotesters" -> "1.2.5",
   "dsptools" -> "1.1.4"
   )
