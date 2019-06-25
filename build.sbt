@@ -6,7 +6,6 @@ organization := "Chisel-blocks"
 
 name := "cic3"
 
-//version := scala.sys.process.Process("git rev-parse --short HEAD").!!.mkString.replaceAll("\\s", "")+"-SNAPSHOT"
 version := scala.sys.process.Process("git rev-parse --short HEAD").!!.mkString.replaceAll("\\s", "")
 
 scalaVersion := "2.12.3"
@@ -70,6 +69,8 @@ val defaultVersions = Map(
 libraryDependencies ++= (Seq("chisel3","dsptools", "chisel-iotesters").map {
   dep: String => "edu.berkeley.cs" %% dep % sys.props.getOrElse(dep + "Version", defaultVersions(dep)) })
 
+//This is (mainly) for TheSDK testbenches, may become obsolete
+//libraryDependencies += "com.gilt" %% "handlebars-scala" % "2.1.1"
 libraryDependencies  ++= Seq(
 //  // Last stable release
   "org.scalanlp" %% "breeze" % "0.13.2",
