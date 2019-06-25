@@ -2,13 +2,14 @@ import scala.sys.process._
 // OBS: sbt._ has also process. Importing scala.sys.process 
 // and explicitly using it ensures the correct operation
 
-organization := "edu.berkeley.cs"
+organization := "Chisel-blocks"
 
 name := "cic3"
 
-version := scala.sys.process.Process("git rev-parse --short HEAD").!!.mkString.replaceAll("\\s", "")+"-SNAPSHOT"
+//version := scala.sys.process.Process("git rev-parse --short HEAD").!!.mkString.replaceAll("\\s", "")+"-SNAPSHOT"
+version := scala.sys.process.Process("git rev-parse --short HEAD").!!.mkString.replaceAll("\\s", "")
 
-scalaVersion := "2.11.11"
+scalaVersion := "2.12.3"
 
 // [TODO] what are these needed for? remove if obsolete
 def scalacOptionsVersion(scalaVersion: String): Seq[String] = {
@@ -61,17 +62,13 @@ resolvers += "Sonatype Releases" at "https://oss.sonatype.org/content/repositori
 // Provide a managed dependency on X if -DXVersion="" is supplied on the command line.
 // [TODO] is simpler clearer?
 val defaultVersions = Map(
-  "chisel3" -> "3.1.6",
+  "chisel3" -> "3.1.7",
   "chisel-iotesters" -> "1.2.5",
   "dsptools" -> "1.1.4"
   )
 
 libraryDependencies ++= (Seq("chisel3","dsptools", "chisel-iotesters").map {
   dep: String => "edu.berkeley.cs" %% dep % sys.props.getOrElse(dep + "Version", defaultVersions(dep)) })
-
-
-//This is (mainly) for TheSDK testbenches, may become obsolete
-libraryDependencies += "com.gilt" %% "handlebars-scala" % "2.1.1"
 
 libraryDependencies  ++= Seq(
 //  // Last stable release
