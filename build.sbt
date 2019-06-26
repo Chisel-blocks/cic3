@@ -63,7 +63,7 @@ resolvers += "Sonatype Releases" at "https://oss.sonatype.org/content/repositori
 val defaultVersions = Map(
   "chisel3" -> "3.1.7",
   "chisel-iotesters" -> "1.2.5",
-  "dsptools" -> "1.1.4"
+  "dsptools" -> "1.1.8"
   )
 
 libraryDependencies ++= (Seq("chisel3","dsptools", "chisel-iotesters").map {
