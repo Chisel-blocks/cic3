@@ -1,6 +1,6 @@
 // See LICENSE_AALTO.txt for license details
 
-package fir.config
+package hb_decimator.config
 
 import net.jcazevedo.moultingyaml._
 import net.jcazevedo.moultingyaml.DefaultYamlProtocol._
@@ -8,40 +8,40 @@ import scala.math.BigInt
 import scala.io.Source
 import chisel3._
 
-/** FIR parameter case class
+/** HB parameter case class
   */
-case class FirGeneric(
+case class HbGeneric(
   syntax_version:     Option[Int], // None for scala instantiation
   resolution:	      Int,
   gainBits:           Int
 )
 
-case class FirTaps(
+case class HbTaps(
   H:                  Seq[Double]
 )
 
-case class FirConfig(
+case class HbConfig(
   syntax_version:     Option[Int], // None for scala instantiation
   resolution:         Int,
   H:		      Seq[Int],
   gainBits:           Int
 )
 
-object FirConfig {
-  implicit val firConfigFormat = yamlFormat3(FirGeneric)
+object HbConfig {
+  implicit val hbConfigFormat = yamlFormat3(HbGeneric)
 
-  implicit val dHFormat = yamlFormat1(FirTaps)
+  implicit val dHFormat = yamlFormat1(HbTaps)
 
   // TODO: Update this to always match the major version number of the release
   val syntaxVersion = 2
 
   /** Exception type for FIR config parsing errors */
-  class FirConfigParseException(msg: String) extends Exception(msg)
+  class HbConfigParseException(msg: String) extends Exception(msg)
 
   /** Type for representing error return values from a function */
   case class Error(msg: String) {
     /** Throw a parsing exception with a debug message. */
-    def except() = { throw new FirConfigParseException(msg) }
+    def except() = { throw new HbConfigParseException(msg) }
 
     /** Abort program execution and print out the reason */
     def panic() = {
@@ -68,12 +68,12 @@ object FirConfig {
     Left(version)
   }
 
-  def loadFromFile(filename: String): Either[FirConfig, Error] = {
-    println(s"\nLoading fir configuration from file: $filename")
+  def loadFromFile(filename: String): Either[HbConfig, Error] = {
+    println(s"\nLoading hb configuration from file: $filename")
     var fileString: String = ""
     try {
       val bufferedSource = Source.fromFile(filename)
-      fileString = bufferedSource.getLines.mkString("\n")
+      fileString = bufferedSource.getLines().mkString("\n")
       bufferedSource.close
     } catch {
       case e: Exception => return Right(Error(e.getMessage()))
@@ -91,11 +91,11 @@ object FirConfig {
       case Right(err) => return Right(err)
     }
 
-    // Parse FirConfig from YAML AST
-    val generic = yamlAst.convertTo[FirGeneric]
-    val taps = yamlAst.convertTo[FirTaps]
+    // Parse HbConfig from YAML AST
+    val generic = yamlAst.convertTo[HbGeneric]
+    val taps = yamlAst.convertTo[HbTaps]
 
-    val config = new FirConfig(generic.syntax_version, generic.resolution, taps.H.map(_ * (math.pow(2, generic.resolution - 1) / 2 - 1)).map(_.toInt), generic.gainBits)
+    val config = new HbConfig(generic.syntax_version, generic.resolution, taps.H.map(_ * (math.pow(2, generic.resolution - 1) / 2 - 1)).map(_.toInt), generic.gainBits)
 
     println("resolution:")
     println(config.resolution)
