@@ -42,10 +42,10 @@ SCALAPATH=${ROOTPATH}/src/main/scala
 FIRRTL_JAR="$ROOTPATH/rocket-chip/firrtl/utils/bin/firrtl.jar"
 
 VPATHDIRS=`find ${SCALAPATH}/* -type d -exec basename '{}' ';'`
-MAINMODULE="HB_Decimator"
+MAINMODULE="CIC_Decimator"
 MODULES=""
 TEST_MODULES=""
-PACKAGE="hb_decimator"
+PACKAGE="cic_decimator"
 
 
 ############################# MAKEFILE   ####################################
@@ -75,7 +75,7 @@ TEST_TARGETS = \$(foreach name,\$(TEST_MODULES), test_\$(name))
 SBT=sbt -J-Xmx16G -J-Xss8M
 
 # Default parameters
-config_file ?= "hb-config.yml"
+config_file ?= "cic-config.yml"
 td ?= "verilog/"
 
 MAINPARAMS = -config_file \$(config_file) -td \$(td)
