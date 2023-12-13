@@ -19,7 +19,6 @@ class CIC_DecimatorIO(resolution: Int, gainBits: Int) extends Bundle {
     val clockslow = Input(Clock())
     val integscale = Input(UInt(gainBits.W))
     val integshift = Input(UInt(log2Ceil(resolution).W))
-    val scale = Input(UInt(gainBits.W))
     val iptr_A = Input(DspComplex(SInt(resolution.W), SInt(resolution.W)))
   }
   val out = new Bundle {
