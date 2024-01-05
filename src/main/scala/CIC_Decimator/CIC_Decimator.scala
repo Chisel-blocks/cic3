@@ -37,7 +37,8 @@ class CIC_Decimator(config: CicConfig) extends Module {
       if (i <= 0) {
         integregs(i) := io.in.iptr_A
       } else {
-        integregs(i) := DspComplex.wire(integregs(i - 1).real + integregs(i).real, integregs(i - 1).imag + integregs(i).imag)
+        integregs(i).real := integregs(i - 1).real + integregs(i).real
+        integregs(i).imag := integregs(i - 1).imag + integregs(i).imag
       }
     }
 
@@ -51,7 +52,8 @@ class CIC_Decimator(config: CicConfig) extends Module {
               slowregs(i).imag := integregs(config.order).imag * io.in.integscale << io.in.integshift
               minusregs(i) := slowregs(i)
           } else {
-              slowregs(i) := DspComplex.wire(slowregs(i - 1).real - minusregs(i - 1).real, slowregs(i - 1).imag - minusregs(i - 1).imag)
+              slowregs(i).real := slowregs(i - 1).real - minusregs(i - 1).real
+              slowregs(i).imag := slowregs(i - 1).imag - minusregs(i - 1).imag
               minusregs(i) := slowregs(i)
           }
         }
