@@ -89,7 +89,7 @@ done`
 .PHONY: all help clean \$(MODULES)
 
 
-all: \$(TARGETS)
+all: ${MAINMODULE}
 
 ${MAINMODULE}: \$(VERILOGDIR)/${MAINMODULE}.v
 \$(VERILOGDIR)/${MAINMODULE}.v:
